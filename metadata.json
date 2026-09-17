@@ -1,0 +1,7 @@
+{
+  "name": "Secret Code Lock",
+  "description": "A cute pink secret code unlocking experience surrounded by Hello Kitty plushies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
