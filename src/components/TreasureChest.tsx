@@ -1,29 +1,26 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Archive } from 'lucide-react';
+import { X, Heart } from 'lucide-react';
 
 interface TreasureChestProps {
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
-  isDismissed: boolean;
+  isDismissed?: boolean;
 }
 
 export const TreasureChest: React.FC<TreasureChestProps> = ({
   isOpen,
   onToggle,
   onClose,
-  isDismissed,
 }) => {
-  if (isDismissed) return null;
-
   return (
     <div className="relative inline-flex items-center">
       {/* Speech Bubble Popup */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop click dismisses and permanently closes treasure */}
+            {/* Backdrop click dismisses popup */}
             <div
               className="fixed inset-0 z-40"
               onClick={onClose}
@@ -34,11 +31,11 @@ export const TreasureChest: React.FC<TreasureChestProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.85, y: 8, filter: 'blur(4px)' }}
               transition={{ type: 'spring', damping: 22, stiffness: 320 }}
-              className="absolute bottom-full left-0 mb-3 z-50 bg-white/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-xl shadow-pink-200/50 border-2 border-pink-200 text-pink-900 min-w-[200px] max-w-[260px] select-none"
+              className="absolute bottom-full left-0 mb-3 z-50 bg-white/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-xl shadow-pink-200/50 border-2 border-pink-200 text-pink-900 min-w-[210px] max-w-[270px] select-none"
             >
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-semibold text-pink-800 tracking-wide leading-snug">
-                  YES ur special...
+                  when we getting tg pooks 🥰
                 </p>
 
                 <button
@@ -59,7 +56,7 @@ export const TreasureChest: React.FC<TreasureChestProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Vector Treasure Chest Button (No emoji, No sparkles, Lid does not turn) */}
+      {/* Heart Button */}
       <motion.button
         id="treasure-chest-btn"
         type="button"
@@ -74,32 +71,29 @@ export const TreasureChest: React.FC<TreasureChestProps> = ({
         whileHover={{ scale: 1.12 }}
         whileTap={{ scale: 0.92 }}
         onClick={onToggle}
-        title={isOpen ? 'Close chest' : 'Treasure chest'}
-        aria-label="Treasure chest"
+        title={isOpen ? 'Close' : 'Special message'}
+        aria-label="Special message"
         className={`relative z-50 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center cursor-pointer transition-all shadow-lg border-2 ${
           isOpen
-            ? 'bg-pink-100 border-pink-300 text-pink-700 shadow-pink-300/50'
-            : 'bg-white/90 hover:bg-white border-pink-200 hover:border-pink-300 text-pink-600 hover:text-pink-700 shadow-pink-200/50'
+            ? 'bg-pink-100 border-pink-300 text-pink-600 shadow-pink-300/50'
+            : 'bg-white/90 hover:bg-white border-pink-200 hover:border-pink-300 text-pink-500 hover:text-pink-600 shadow-pink-200/50'
         }`}
       >
-        {/* Animated Treasure Chest icon on opening (smooth bounce pop, lid does not rotate) */}
+        {/* Animated Heart Icon on opening */}
         <motion.div
           animate={
             isOpen
-              ? {
-                  scale: [1, 1.25, 1.08],
-                  y: [0, -2.5, -1],
-                }
+              ? { scale: 1.18, y: -1 }
               : { scale: 1, y: 0 }
           }
           transition={{
             type: 'spring',
-            stiffness: 420,
-            damping: 18,
+            stiffness: 400,
+            damping: 16,
           }}
           className="flex items-center justify-center"
         >
-          <Archive className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+          <Heart className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-colors ${isOpen ? 'fill-pink-500 text-pink-500' : 'fill-pink-200 text-pink-500'}`} />
         </motion.div>
       </motion.button>
     </div>

@@ -16,48 +16,16 @@ export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [showSecretHint, setShowSecretHint] = useState(false);
   const [showTreasure, setShowTreasure] = useState(false);
-  const [isTreasureDismissed, setIsTreasureDismissed] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem('secret_treasure_dismissed') === 'true';
-    } catch {
-      return false;
-    }
-  });
 
-  // Cross-browser persistence: sync treasure status on load
+  // Clear any previous dismissed flags from localStorage so treasure is always available
   useEffect(() => {
-    fetch('/api/treasure/status')
-      .then((res) => {
-        if (!res.ok) return null;
-        return res.json();
-      })
-      .then((data) => {
-        if (data?.dismissed) {
-          setIsTreasureDismissed(true);
-          try {
-            localStorage.setItem('secret_treasure_dismissed', 'true');
-          } catch {}
-        }
-      })
-      .catch(() => {
-        // Fallback gracefully to localStorage if offline
-      });
+    try {
+      localStorage.removeItem('secret_treasure_dismissed');
+    } catch {}
   }, []);
 
   const handleCloseTreasure = () => {
     setShowTreasure(false);
-    setIsTreasureDismissed(true);
-
-    // Save in local storage
-    try {
-      localStorage.setItem('secret_treasure_dismissed', 'true');
-    } catch {}
-
-    // Save in server so it NEVER appears in any other browser
-    fetch('/api/treasure/dismiss', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    }).catch(() => {});
   };
 
   return (
@@ -248,7 +216,7 @@ export default function App() {
               ?
             </motion.button>
 
-            {/* Secret Animated Treasure Chest (Disappears forever once closed) */}
+            {/* Secret Animated Heart Button (Always kept, never disappears) */}
             <TreasureChest
               isOpen={showTreasure}
               onToggle={() => {
@@ -256,7 +224,6 @@ export default function App() {
                 setShowSecretHint(false);
               }}
               onClose={handleCloseTreasure}
-              isDismissed={isTreasureDismissed}
             />
           </div>
         </div>

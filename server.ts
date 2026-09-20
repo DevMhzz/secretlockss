@@ -102,34 +102,11 @@ function saveSiteConfig(newConfig: Partial<SiteConfig> & { startTimerNow?: boole
 }
 
 function getTreasureDismissed(): boolean {
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const content = fs.readFileSync(DATA_FILE, 'utf-8');
-      const data = JSON.parse(content);
-      return Boolean(data.dismissed);
-    }
-  } catch (err) {
-    console.error('Error reading treasure-state.json:', err);
-  }
   return false;
 }
 
 function setTreasureDismissed(): void {
-  try {
-    fs.writeFileSync(
-      DATA_FILE,
-      JSON.stringify(
-        {
-          dismissed: true,
-          dismissedAt: new Date().toISOString(),
-        },
-        null,
-        2
-      )
-    );
-  } catch (err) {
-    console.error('Error writing treasure-state.json:', err);
-  }
+  // Treasure is kept permanently
 }
 
 async function startServer() {
