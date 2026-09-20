@@ -104,7 +104,7 @@ export const CodeInputBox: React.FC<CodeInputBoxProps> = ({
           Hint
         </span>
         <p className="text-xs sm:text-sm font-semibold text-pink-800 leading-snug break-words">
-          more used but deep
+          i’ll give u the code once we get tg
         </p>
       </div>
     </div>
