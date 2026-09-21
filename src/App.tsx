@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { X } from 'lucide-react';
 import { CodeInputBox } from './components/CodeInputBox';
 import { UnlockedCelebration } from './components/UnlockedCelebration';
 import { PlushieCompanion } from './components/PlushieCompanion';
 import { Decorations } from './components/Decorations';
 import { BackgroundMusic } from './components/BackgroundMusic';
 import { TreasureChest } from './components/TreasureChest';
+import { MoveChoiceBox } from './components/MoveChoiceBox';
 
 // Hello Kitty Plushie Assets
 import plushiePeek from './assets/images/hk_plushie_peek_1789355261949.jpg';
@@ -14,7 +14,7 @@ import plushieCozy from './assets/images/hk_plushie_cozy_1789355274608.jpg';
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [showSecretHint, setShowSecretHint] = useState(false);
+  const [showMoveChoice, setShowMoveChoice] = useState(false);
   const [showTreasure, setShowTreasure] = useState(false);
 
   // Clear any previous dismissed flags from localStorage so treasure is always available
@@ -162,66 +162,26 @@ export default function App() {
         </footer>
       )}
 
-      {/* Bottom Corner Left Question Mark & Treasure Buttons & Popups */}
+      {/* Bottom Corner Left Move Choice Box & Heart Buttons & Popups */}
       {!isUnlocked && (
         <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40">
-          <AnimatePresence>
-            {showSecretHint && (
-              <>
-                {/* Invisible backdrop to dismiss popup when clicking outside */}
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setShowSecretHint(false)}
-                />
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.85, y: 8 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.85, y: 8 }}
-                  transition={{ type: 'spring', damping: 22, stiffness: 320 }}
-                  className="relative z-50 mb-3 bg-white/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-xl border-2 border-pink-200 text-pink-900 max-w-[260px] sm:max-w-xs select-none"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm font-semibold text-pink-800 tracking-wide leading-snug">
-                      psss u still owe me an answer..
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setShowSecretHint(false)}
-                      className="text-pink-400 hover:text-pink-600 transition-colors p-0.5 rounded-full cursor-pointer flex-shrink-0"
-                      aria-label="Close"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                  {/* Speech bubble pointer */}
-                  <div className="absolute -bottom-1.5 left-4 w-3.5 h-3.5 bg-white/95 border-b-2 border-r-2 border-pink-200 rotate-45 pointer-events-none" />
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
-
           <div className="flex items-center gap-2.5">
-            <motion.button
-              id="question-hint-btn"
-              type="button"
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.92 }}
-              onClick={() => {
-                setShowSecretHint((prev) => !prev);
+            {/* Bow & Arrow Check-in Button ("howss ur dayyy??" -> good or awful -> Discord webhook) */}
+            <MoveChoiceBox
+              isOpen={showMoveChoice}
+              onToggle={() => {
+                setShowMoveChoice((prev) => !prev);
                 setShowTreasure(false);
               }}
-              className="relative z-50 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white text-pink-600 hover:text-pink-700 font-bold text-lg sm:text-xl shadow-lg shadow-pink-200/50 border-2 border-pink-200 hover:border-pink-300 flex items-center justify-center cursor-pointer transition-all"
-              aria-label="Hint"
-            >
-              ?
-            </motion.button>
+              onClose={() => setShowMoveChoice(false)}
+            />
 
             {/* Secret Animated Heart Button (Always kept, never disappears) */}
             <TreasureChest
               isOpen={showTreasure}
               onToggle={() => {
                 setShowTreasure((prev) => !prev);
-                setShowSecretHint(false);
+                setShowMoveChoice(false);
               }}
               onClose={handleCloseTreasure}
             />
