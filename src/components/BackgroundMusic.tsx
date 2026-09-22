@@ -54,11 +54,11 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isUnlocked = f
         playerRef.current = new window.YT.Player('yt-bg-music-player', {
           height: '1',
           width: '1',
-          videoId: 'yexrZOIhvAQ', // Nine Vicious - Sing To Your Heart
+          videoId: 'nD2X47-iERQ', // Nine Vicious - U Fancy ?
           playerVars: {
             autoplay: 1,
             loop: 1,
-            playlist: 'yexrZOIhvAQ',
+            playlist: 'nD2X47-iERQ',
             controls: 0,
             showinfo: 0,
             modestbranding: 1,
@@ -287,7 +287,7 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isUnlocked = f
               <div
                 className="flex items-center gap-[2.5px] h-3.5 cursor-pointer px-0.5"
                 onClick={togglePlay}
-                title="sing to your heart"
+                title="u fancy ?"
               >
                 {[0.4, 0.9, 0.6, 0.75].map((scale, i) => (
                   <motion.span
@@ -314,9 +314,9 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ isUnlocked = f
               {/* Track Title */}
               <span
                 className="text-xs font-serif italic text-pink-800 tracking-tight select-none max-w-[140px] truncate"
-                title="sing to your heart ~ nine vicious"
+                title="u fancy ? ~ nine vicious"
               >
-                sing to your heart
+                u fancy ?
               </span>
 
               {/* Mute / Unmute Button */}
