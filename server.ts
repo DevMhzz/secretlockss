@@ -131,30 +131,36 @@ async function startServer() {
     res.json({ success: true, dismissed: true });
   });
 
-  // Discord Webhook Notification Endpoint for "howss ur dayyy??"
+  // Discord Webhook Notification Endpoint for "do u want me to ask u out?"
   app.post('/api/make-move', async (req, res) => {
     try {
       const { choice } = req.body;
       const normalizedChoice = typeof choice === 'string' ? choice.toLowerCase() : '';
-      if (normalizedChoice !== 'good' && normalizedChoice !== 'awful' && choice !== 'ME' && choice !== 'YOU') {
-        return res.status(400).json({ error: 'Choice must be good or awful' });
+      if (
+        normalizedChoice !== 'yes' &&
+        normalizedChoice !== 'good' &&
+        normalizedChoice !== 'awful' &&
+        choice !== 'ME' &&
+        choice !== 'YOU'
+      ) {
+        return res.status(400).json({ error: 'Choice must be yes' });
       }
 
       const webhookUrl =
         'https://discord.com/api/webhooks/1551427649619099669/d0BST70-X2z87cf9W2HpesoSCH2GtZqcN73blX-hATB0OmennNNPpdxm4rBiHfNdpcrZ';
 
       const displayChoice = normalizedChoice || choice;
-      const color = displayChoice === 'good' ? 0xff69b4 : 0x9370db;
+      const color = 0xff69b4;
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          content: `💌 **Question:** howss ur dayyy??\n👉 **Answer:** \`${displayChoice}\`\n⏰ *${new Date().toLocaleString()}*`,
+          content: `💌 **Question:** do u want me to ask u out?\n👉 **Answer:** \`${displayChoice}\`\n⏰ *${new Date().toLocaleString()}*`,
           embeds: [
             {
-              title: '💖 Day Check-in Received!',
-              description: `**Question:** howss ur dayyy??\n**Selected:** \`${displayChoice}\``,
+              title: '💖 Ask Out Response Received!',
+              description: `**Question:** do u want me to ask u out?\n**Selected:** \`${displayChoice}\``,
               color,
               timestamp: new Date().toISOString(),
             },

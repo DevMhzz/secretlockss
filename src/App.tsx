@@ -162,11 +162,11 @@ export default function App() {
         </footer>
       )}
 
-      {/* Bottom Corner Left Reminder & Heart Buttons & Popups */}
+      {/* Bottom Corner Left Move Choice Box & Heart Buttons & Popups */}
       {!isUnlocked && (
         <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40">
           <div className="flex items-center gap-2.5">
-            {/* Bow & Arrow Reminder Button */}
+            {/* Bow & Arrow Ask Out Button ("do u want me to ask u out?" -> yes or yes -> Discord webhook) */}
             <MoveChoiceBox
               isOpen={showMoveChoice}
               onToggle={() => {
