@@ -101,10 +101,10 @@ export const CodeInputBox: React.FC<CodeInputBoxProps> = ({
         className="w-full max-w-sm px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border-2 border-pink-200 shadow-lg shadow-pink-200/50 text-center select-none"
       >
         <span className="text-[11px] font-bold uppercase tracking-wider text-pink-500 block mb-0.5">
-          Hint
+          ???
         </span>
         <p className="text-xs sm:text-sm font-semibold text-pink-800 leading-snug break-words">
-          code bottom barrel btw
+          yo where are you even at in lunch
         </p>
       </div>
     </div>

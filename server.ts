@@ -180,6 +180,40 @@ async function startServer() {
     }
   });
 
+  // Discord Webhook Notification Endpoint for "site coming soon??" message open ("iykyk")
+  app.post('/api/open-message', async (req, res) => {
+    try {
+      const webhookUrl =
+        'https://discord.com/api/webhooks/1551427649619099669/d0BST70-X2z87cf9W2HpesoSCH2GtZqcN73blX-hATB0OmennNNPpdxm4rBiHfNdpcrZ';
+
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `💌 **Site Coming Soon:** Message opened!\n👉 **Message:** \`iykyk\`\n⏰ *${new Date().toLocaleString()}*`,
+          embeds: [
+            {
+              title: '✨ "iykyk" Message Opened!',
+              description: `Someone clicked **open** on **site coming soon??**\nRevealed message: \`iykyk\``,
+              color: 0xff69b4,
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Discord webhook responded with error:', errorText);
+      }
+
+      res.json({ success: true, message: 'iykyk' });
+    } catch (err) {
+      console.error('Failed to notify Discord webhook for open-message:', err);
+      res.json({ success: true, message: 'iykyk' });
+    }
+  });
+
   // Site Configuration API (hints & timer visible to everyone)
   app.get('/api/config', (req, res) => {
     const config = getSiteConfig();
